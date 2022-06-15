@@ -21,6 +21,7 @@ serialPorts = list(serial.tools.list_ports.comports())
 if serialPorts.__len__() <= 0:
     print("No serial ports found! Exiting...")
     sys.exit()
+print("Available serial ports:")
 # Print available serial ports and look for ArduSiPM
 # If available, connect to ArduSiPM
 # If not available, exit
@@ -28,14 +29,15 @@ ser = serial.Serial()
 # For each serialPort in the serialPorts list
 for serialPort in serialPorts:
     # Print the serialPort
-    print(serialPort)
+    #print(serialPort)
+    print("- " + serialPort.description)
     # If the serialPort's description contains "Arduino", an ArduSiPM was possibly found
     # Attempt a connection
-    if serialPort.description.find("Arduino") > 0:
+    if serialPort.description.find("Serial") > 0:
         print("ArduSiPM found on " + serialPort.name + ", attempting connection...")
         ser.baudrate = 115200
         ser.timeout = None
-        ser.port = serialPort
+        ser.port = str(serialPort).split(" ")[0]
         ser.open()
         print("Connected to ArduSiPM on " + serialPort.name)
         break
@@ -48,5 +50,7 @@ for serialPort in serialPorts:
 # Print all lines incoming from serial
 # This is just temporary
 while 1:
-    print(ser.readline().rstrip().decode("ascii"))
+    serStr = ser.readline().rstrip().decode("ascii")
+    print("COUNTS: " + serStr.removeprefix("$"))
+
 
