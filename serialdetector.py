@@ -29,7 +29,6 @@ ser = serial.Serial()
 # For each serialPort in the serialPorts list
 for serialPort in serialPorts:
     # Print the serialPort
-    #print(serialPort)
     print("- " + serialPort.description)
     # If the serialPort's description contains "Arduino", an ArduSiPM was possibly found
     # Attempt a connection
@@ -49,6 +48,7 @@ for serialPort in serialPorts:
 
 # Print all lines incoming from serial
 # This is just temporary
+print("Beginning data reception...")
 while 1:
     serStr = ser.readline().rstrip().decode("ascii")
     print("COUNTS: " + serStr.removeprefix("$"))
