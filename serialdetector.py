@@ -1,3 +1,7 @@
+# Python ArduSiPM Serial Interface With Graphing Utilities
+# Authors Riccardo Iacob, Mattia Zanovello
+# Date 15/06/2022
+
 import sys
 import time
 import csv
